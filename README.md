@@ -36,3 +36,11 @@ kubectl apply -f cluster/with-zookeper/kafka-persintent.yaml
 ```bash
 kubectl apply -f topics/topics.yaml
 ```
+
+## Create a user 
+
+- [YAML](./user/user.yaml)
+
+```bash
+kubectl apply -f  ./user/user.yaml
+```
