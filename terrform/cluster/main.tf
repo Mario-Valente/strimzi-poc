@@ -8,7 +8,7 @@ resource "helm_release" "strimzi" {
   values = [
     file("${path.module}/strimzi/strimzi-values.yaml")
   ]
-  
+
 }
 
 resource "kubernetes_manifest" "cluster_kafka_zookeeper" {
@@ -43,8 +43,8 @@ resource "kubernetes_manifest" "cluster_kafka_zookeeper" {
             }
         }
     }
-    
-  
+
+
 }
 
 resource "kubernetes_manifest" "controller_kafka" {
@@ -79,7 +79,7 @@ resource "kubernetes_manifest" "controller_kafka" {
         }
 
     }
-  
+
 }
 
 }
@@ -116,9 +116,9 @@ resource "kubernetes_manifest" "broker_kafka" {
         }
 
     }
-  
+
 }
-  
+
 }
 
 resource "kubernetes_manifest" "cluster_kafka_without_zookeeper" {
@@ -129,16 +129,17 @@ resource "kubernetes_manifest" "cluster_kafka_without_zookeeper" {
     apiVersion = "kafka.strimzi.io/v1beta2"
     kind       = "Kafka"
     metadata = {
-      name      = "my-cluster"
-      namespace = "kafka"
-      labels = {
+      name        = "my-cluster"
+      namespace   = "kafka"
+      annotations = {
         "strimzi.io/node-pools" = "enabled"
         "strimzi.io/kraft"      = "enabled"
       }
     }
     spec = {
       kafka = {
-        replicas = 3
+        version         = "3.8.0"
+        metadataVersion = "3.8-IV0"
         listeners = [
           {
             name = "plain"
@@ -154,9 +155,11 @@ resource "kubernetes_manifest" "cluster_kafka_without_zookeeper" {
           }
         ]
         config = {
-          "offsets.topic.replication.factor"          = 3
-          "transaction.state.log.replication.factor"  = 3
-          "transaction.state.log.min.isr"             = 2
+          "offsets.topic.replication.factor"         = 3
+          "transaction.state.log.replication.factor" = 3
+          "transaction.state.log.min.isr"            = 2
+          "default.replication.factor"               = 3
+          "min.insync.replicas"                      = 2
         }
       }
       entityOperator = {
