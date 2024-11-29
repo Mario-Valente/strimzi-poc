@@ -1,0 +1,19 @@
+topics:
+  - name: topic1
+    namespace: kafka
+    cluster: cluster1
+    partitions: 3
+    replicas: 2
+    config:
+      retention.ms: 3600000
+      segment.bytes: 1073741824
+
+  - name: topic2
+    namespace: kafka
+    cluster: cluster2
+    partitions: 5
+    replicas: 3
+    config:
+      retention.ms: 7200000
+      segment.bytes: 536870912
+

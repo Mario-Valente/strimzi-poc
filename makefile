@@ -9,10 +9,10 @@ init:
 	cd $(TF_DIR) && terraform init
 
 plan:
-	cd $(TF_DIR) && terraform plan -target=helm_release.strimzi -out=$(TF_PLAN)
+	cd $(TF_DIR) && terraform plan --out=$(TF_PLAN)
 
 apply:
-	cd $(TF_DIR) && terraform apply -auto-approve -target=helm_release.strimzi && terraform apply -auto-approve  
+	cd $(TF_DIR) && terraform apply $(TF_PLAN)
 
 destroy:
 	cd $(TF_DIR) && terraform destroy
